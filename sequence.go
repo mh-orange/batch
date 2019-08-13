@@ -15,8 +15,13 @@
 package batch
 
 import (
+	"errors"
 	"fmt"
 )
+
+// ErrDone should be returned by a step in a sequence to indicate
+// the sequence is complete
+var ErrDone = errors.New("Skip The Remaining Sequence")
 
 // Step is a step in a sequence, it includes a descriptive name and
 // a function to be called
@@ -44,6 +49,10 @@ func (se *SequenceErr) Error() string {
 func Sequence(steps ...*Step) (err error) {
 	for i, step := range steps {
 		cause := step.F()
+		if cause == ErrDone {
+			continue
+		}
+
 		if cause != nil {
 			err = &SequenceErr{i, step, cause}
 			break
