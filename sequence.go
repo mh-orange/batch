@@ -14,7 +14,9 @@
 
 package batch
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // Step is a step in a sequence, it includes a descriptive name and
 // a function to be called

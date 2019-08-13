@@ -50,10 +50,6 @@ func (pr *proxyReader) Read(p []byte) (n int, err error) {
 	if n > 0 {
 		pr.progress.Add(int64(n))
 	}
-
-	if err == io.EOF {
-		pr.progress.Finish()
-	}
 	return
 }
 
