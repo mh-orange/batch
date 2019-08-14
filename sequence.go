@@ -50,7 +50,8 @@ func Sequence(steps ...*Step) (err error) {
 	for i, step := range steps {
 		cause := step.F()
 		if cause == ErrDone {
-			continue
+			err = nil
+			break
 		}
 
 		if cause != nil {
